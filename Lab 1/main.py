@@ -20,7 +20,7 @@ print("Enter your rules: ")
 while True:
     s = input()
     array_of_rules.append(s)
-    print("One more?")
+    print("One more?(n/no)")
     p = input()
     if p.lower() == 'n' or p.lower() == 'no':
         break
@@ -64,7 +64,7 @@ for ch in arr_reverse[::-1]:
 
 # Entering string
 while True:
-    choose = input("Do you want to enter string? ")
+    choose = input("Do you want to enter string?(n/no) ")
 
     if choose.lower() == 'n' or choose.lower() == 'no':
         break
