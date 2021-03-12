@@ -52,7 +52,7 @@ for i in all_states:
                                         in_transitions[k] = [in_transitions[k][0] + nfa.get(j).get(k)[0]]
                                         in_transitions[k] = [in_transitions[k][0].replace('^', '')]
                         else:
-                            break
+                            continue
 
         else:
             continue
