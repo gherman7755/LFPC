@@ -4,7 +4,6 @@ rules = {"S" : {"aB", "bA", "A"}, "A" : {"B", "Sa", "bBA", "b"},
 keys = list(rules.keys())
 
 
-# check for epsilon
 def check_for_epsilon(rules):
     is_epsilon = False
     epsilon = 0
@@ -18,7 +17,6 @@ def check_for_epsilon(rules):
     return is_epsilon, epsilon
 
 
-# counting number of epsilon
 def count_of_eps(string, epsilon):
     count = 0
     for ch in string:
@@ -27,7 +25,6 @@ def count_of_eps(string, epsilon):
     return count
 
 
-# finds unit productions
 def check_for_unit(rules):
     are_units = False
     unit_add = ''
@@ -43,7 +40,6 @@ def check_for_unit(rules):
     return are_units, unit_add, unit_from
 
 
-# finds unaccessible variables
 def is_unaccessible(rules, variable):
     unaccessible = True
     for check_in in keys:
@@ -55,8 +51,6 @@ def is_unaccessible(rules, variable):
 
 
 is_eps, eps = check_for_epsilon(rules)
-
-# loop for deleting epsilon
 while is_eps:
     for k in keys:
         for node in rules[k].copy():
@@ -72,8 +66,6 @@ while is_eps:
     is_eps, eps = check_for_epsilon(rules)
 
 are_units, unit_add, unit_from = check_for_unit(rules)
-
-# loop for adding new rules
 while are_units:
     for node in rules[unit_from]:
         rules[unit_add].add(node)
@@ -81,17 +73,15 @@ while are_units:
     are_units, unit_add, unit_from = check_for_unit(rules)
 
 
-# loop for checking if each key is accessible
 for k in keys:
     if is_unaccessible(rules, k):
         rules.pop(k, None)
 
 
 keys = list(rules.keys())
-substitution = {"a": 'X1', "b": 'X2', "bB": "Y1"}
+substitution = {"a": "X1", "b": "X2", "X2B": "Y1"}
 subs_keys = list(substitution.keys())
 
-# The last loops for Chomsky Normal Form
 for key in keys:
     for node in rules[key]:
         if len(node) == 2 and not node.isupper() and not node.islower():
@@ -101,8 +91,22 @@ for key in keys:
                     rules[key].remove(node)
                     rules[key].add(new_node)
                     break
-        elif len(node) == 3 and node[:2] not in substitution.values():
+        elif len(node) == 3 and node[:2] not in substitution.values() and node[:2] in subs_keys:
             new_node = node.replace(node[:2], substitution[node[:2]])
             rules[key].remove(node)
             rules[key].add(new_node)
+
+        elif len(node) == 3 and node[:2] not in substitution.values() and node[:2] not in subs_keys:
+            new_node = node.replace(node[:2], substitution[node[0]] + node[1])
+            new_node1 = new_node.replace(new_node[:3], substitution[new_node[:3]])
+            rules[key].remove(node)
+            rules[key].add(new_node1)
+
+
+for k in substitution.keys():
+    if k not in rules:
+        rules[k] = {substitution.get(k)}
+    elif k in rules:
+        rules[k].add(substitution.get(k))
+
 print(rules)
