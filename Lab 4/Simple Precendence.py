@@ -261,7 +261,7 @@ while len(new_string) != 5 and new_string[2] != 'S':
                     new_string = ''.join(new_string)
                     minimum = 99
 
-    if minimum == 4:
+    elif minimum == 4:
         line = new_string[a:b + 1]
         line2 = line.replace(line[2], '')
         new_string = new_string.replace(line, line2, 1)
@@ -275,7 +275,7 @@ while len(new_string) != 5 and new_string[2] != 'S':
                     new_string = ''.join(new_string)
                     minimum = 99
 
-    if minimum == 6:
+    elif minimum == 6:
         line = new_string[a:b + 1]
         line2 = line.replace(line[2], '')
         new_string = new_string.replace(line, line2, 1)
@@ -289,7 +289,7 @@ while len(new_string) != 5 and new_string[2] != 'S':
                     new_string = ''.join(new_string)
                     minimum = 99
 
-    if minimum == 8:
+    elif minimum == 8:
         line = new_string[a:b + 1]
         line2 = line.replace(line[2], '')
         new_string = new_string.replace(line, line2, 1)
@@ -302,6 +302,10 @@ while len(new_string) != 5 and new_string[2] != 'S':
                     new_string[b - 6] = simple_precedence_matrix[non][new_string[b - 5]]
                     new_string = ''.join(new_string)
                     minimum = 99
+
+    else:
+        print("I think it is infinite loop! Your word is not accepted")
+        break
 
     print(new_string)
 
